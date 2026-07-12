@@ -1,0 +1,43 @@
+{
+  "$schema": "https://static.modelcontextprotocol.io/schemas/2025-12-11/server.schema.json",
+  "name": "io.github.bosmdavid-gif/dropthehassle",
+  "description": "Put a website online and wire up its domain, email and DNS in a few clicks. No code.",
+  "title": "DropTheHassle",
+  "websiteUrl": "https://dropthehassle.com",
+  "repository": {
+    "url": "https://github.com/bosmdavid-gif/dropthehassle-mcp",
+    "source": "github"
+  },
+  "version": "0.1.0",
+  "packages": [
+    {
+      "registryType": "npm",
+      "identifier": "dropthehassle-mcp",
+      "version": "0.1.0",
+      "runtimeHint": "npx",
+      "transport": {
+        "type": "stdio"
+      },
+      "environmentVariables": [
+        {
+          "name": "DTH_TOKEN",
+          "description": "Your DropTheHassle account token from the dashboard. The agent uses it to act on your account. It can deploy and manage, but there is no endpoint to spend money.",
+          "format": "string",
+          "isRequired": true,
+          "isSecret": true
+        }
+      ]
+    }
+  ],
+  "_meta": {
+    "io.modelcontextprotocol.registry/publisher-provided": {
+      "tools": [
+        { "name": "whoami",        "description": "Show which DropTheHassle account and plan the token belongs to." },
+        { "name": "list_sites",    "description": "List the sites in your account with their live links and status." },
+        { "name": "search_domain", "description": "Check if a domain is available and what it costs, before you buy." },
+        { "name": "deploy_site",   "description": "Put a site online, or push an update to a site you already have." },
+        { "name": "point_domain",  "description": "Connect a domain you own to a site and set its DNS, redirects and email." }
+      ]
+    }
+  }
+}
