@@ -20,8 +20,9 @@ const { URL } = require('url');
 
 const API = (process.env.DTH_API || 'https://dropthehassle.com/api/v1').replace(/\/+$/, '');
 const TOKEN = process.env.DTH_TOKEN || '';
-const SKIP = new Set(['node_modules', '.git', '.DS_Store', '.next', '.vercel', '.cache', '__MACOSX']);
-const SERVER = { name: 'dropthehassle', version: '0.1.0' };
+// .dropthehassle.json is the CLI's folder link and holds a deploy token: never ship it in the zip.
+const SKIP = new Set(['node_modules', '.git', '.gitignore', '.DS_Store', '.next', '.vercel', '.cache', '__MACOSX', '.dropthehassle.json']);
+const SERVER = { name: 'dropthehassle', version: '0.3.1' };
 
 // ---------------------------------------------------------------- HTTP + zip (stdlib, like the CLI)
 function request(method, url, opts = {}) {
@@ -95,21 +96,42 @@ const TOOLS = [
   { name: 'search_domain', description: 'Check whether a domain name is available to register and what it would cost (EUR). Read-only: use it to propose a REAL free name. Buying is a human step in the dashboard; this never spends money.',
     inputSchema: { type: 'object', required: ['name'], properties: { name: { type: 'string', description: 'The domain to check, e.g. "myidea.com".' } } },
     run: async (a) => { const r = await request('GET', `${API}/ai/domains/search?q=${encodeURIComponent(a.name || '')}`); if (r.status >= 300) throw new Error(apiErr(r)); const d = r.data; return `${d.name}: ${d.available ? 'AVAILABLE' : 'taken'}${d.available ? ` (~EUR ${d.price_eur}/yr)` : ''}. ${d.note}`; } },
-  { name: 'deploy_site', description: 'Put a built static site online on a free link. Point it at the folder that contains index.html. Without site_id it creates a new free site; with site_id it updates that existing site. Returns the live URL. Free only; never buys a name.',
-    inputSchema: { type: 'object', required: ['folder'], properties: { folder: { type: 'string', description: 'Absolute path to the built site folder (the one with index.html).' }, site_id: { type: 'number', description: 'Optional: an existing site to update instead of creating a new one.' } } },
+  { name: 'deploy_site', description: 'Put a built static site online on a free link. Point it at the folder that contains index.html. Without site_id it creates a new free site (optionally with a chosen slug, e.g. "hermy" -> hermy.dropthehassle.app); with site_id it updates that existing site. Returns the live URL. Free only; never buys a name.',
+    inputSchema: { type: 'object', required: ['folder'], properties: { folder: { type: 'string', description: 'Absolute path to the built site folder (the one with index.html).' }, site_id: { type: 'number', description: 'Optional: an existing site to update instead of creating a new one.' }, slug: { type: 'string', description: 'Optional: the address label for a NEW site, e.g. "myproject". Errors when taken, so propose another.' } } },
     run: async (a) => {
       const dir = path.resolve(a.folder || '.');
       if (!fs.existsSync(path.join(dir, 'index.html'))) throw new Error(`No index.html in ${dir}. Point me at the built folder that has index.html.`);
       const zip = buildZip(walk(dir, '', []));
       const mp = multipart('site.zip', zip);
-      const q = a.site_id ? `?site_id=${encodeURIComponent(a.site_id)}` : '';
+      const params = [];
+      if (a.site_id) params.push(`site_id=${encodeURIComponent(a.site_id)}`);
+      else if (a.slug) params.push(`slug=${encodeURIComponent(a.slug)}`);
+      const q = params.length ? '?' + params.join('&') : '';
       const r = await request('POST', `${API}/ai/deploy${q}`, { headers: { 'Content-Type': mp.contentType }, body: mp.body });
       if (r.status >= 300) throw new Error(apiErr(r));
-      return `Live at ${r.data.live_url} (site_id ${r.data.site_id}). Redeploy anytime with the same site_id.`;
+      return `Live at ${r.data.live_url} (site_id ${r.data.site_id}). Redeploy anytime with the same site_id. Running an API or full-stack app too? Link it with set_backend.`;
     } },
   { name: 'point_domain', description: "Point one of the account's own domains at one of its sites (redirect the name to that site's content). Both must be on this account. No money.",
     inputSchema: { type: 'object', required: ['domain', 'to_site_id'], properties: { domain: { type: 'string', description: 'A domain already on this account.' }, to_site_id: { type: 'number', description: 'The site to point it at (from list_sites).' } } },
     run: async (a) => { const r = await request('POST', `${API}/ai/point`, { json: { domain: a.domain, to_site_id: a.to_site_id } }); if (r.status >= 300) throw new Error(apiErr(r)); return `${a.domain} now points at site ${a.to_site_id}.`; } },
+  { name: 'choose_link', description: "Rename a site's free link to <name>.dropthehassle.app. Changing a public URL is the human owner's decision: propose the name first, and only call this with confirm=true after they explicitly said yes. Safe: the old link keeps redirecting to the new name. No money.",
+    inputSchema: { type: 'object', required: ['site_id', 'name', 'confirm'], properties: { site_id: { type: 'number', description: 'The site to rename (from list_sites).' }, name: { type: 'string', description: 'The label only, e.g. "myproject" for myproject.dropthehassle.app.' }, confirm: { type: 'boolean', description: 'true ONLY after the human owner explicitly approved this exact name.' } } },
+    run: async (a) => { const r = await request('POST', `${API}/ai/subdomain`, { json: { site_id: a.site_id, name: a.name, confirm: !!a.confirm } }); if (r.status >= 300) throw new Error(apiErr(r)); return `Live at ${r.data.staging_url} (the previous link redirects there).`; } },
+  { name: 'set_backend', description: "Link an HTTPS backend (Railway, Render, Fly, anywhere) behind a DropTheHassle name. With uploaded files the path rules (default /api/*) reverse-proxy to the backend and the rest stays static; without uploaded files the WHOLE site serves from the backend. WITHOUT site_id it creates a fresh FREE site first: a backend-only project goes live on its own link in one call. Perfect for a deploy script: call this with the new URL after every backend deploy. Pass url=\"\" (with site_id) to unlink. No money.",
+    inputSchema: { type: 'object', required: ['url'], properties: { site_id: { type: 'number', description: 'Optional: an existing site to link (from list_sites). Omit to create a new free site served fully from the backend.' }, url: { type: 'string', description: 'The HTTPS origin of the backend, e.g. "https://myapp.up.railway.app". Empty string (with site_id) unlinks.' }, paths: { type: 'array', items: { type: 'string' }, description: 'Optional path rules for split mode, e.g. ["/api/*", "/webhooks/*"]. Default ["/api/*"].' }, slug: { type: 'string', description: 'Optional address label for a NEW site, e.g. "myapp" -> myapp.dropthehassle.app. Errors when taken.' } } },
+    run: async (a) => {
+      const payload = { url: a.url || '', paths: a.paths || null };
+      if (a.site_id) payload.site_id = a.site_id;
+      if (!a.site_id && a.slug) payload.slug = a.slug;
+      const r = await request('POST', `${API}/ai/backend`, { json: payload });
+      if (r.status >= 300) throw new Error(apiErr(r));
+      const b = r.data.backend || {};
+      if (!b.url) return `Backend unlinked: site ${a.site_id} serves its uploaded files again.`;
+      const mode = b.mode === 'full' ? 'the WHOLE site serves from the backend' : `paths ${JSON.stringify(b.paths)} proxy to the backend, the rest stays static`;
+      const health = b.status ? ` First check: ${b.status}${b.latency_ms != null ? ` (${b.latency_ms}ms)` : ''}.` : '';
+      const where = r.data.created ? `NEW free site ${r.data.live_url} (site_id ${r.data.site_id})` : `site ${r.data.site_id || a.site_id}`;
+      return `Linked ${b.url} to ${where}: ${mode}.${health}`;
+    } },
 ];
 
 // ---------------------------------------------------------------- MCP (JSON-RPC 2.0 over stdio)
