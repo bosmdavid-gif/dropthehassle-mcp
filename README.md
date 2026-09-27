@@ -86,6 +86,23 @@ Restart Windsurf after saving so the agent reloads the server.
 
 [`smithery.yaml`](./smithery.yaml) is a stdio config. The install wizard asks for `dthToken` and passes it as `DTH_TOKEN` to `npx -y dropthehassle-mcp`.
 
+### Hosted remote
+
+The same server is published at `https://dropthehassle.com/mcp` (streamable HTTP). A client `mcp.json` can point at that URL instead of running `npx`. Send the token as a Bearer header. The header is optional for scanning.
+
+```json
+{
+  "mcpServers": {
+    "dropthehassle": {
+      "url": "https://dropthehassle.com/mcp",
+      "headers": {
+        "Authorization": "Bearer dth_your-token-here"
+      }
+    }
+  }
+}
+```
+
 ## Tools
 
 | Tool | What it does |
