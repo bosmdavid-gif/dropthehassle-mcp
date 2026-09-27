@@ -29,19 +29,63 @@
       ]
     }
   ],
+  "remotes": [
+    {
+      "type": "streamable-http",
+      "url": "https://dropthehassle.com/mcp",
+      "headers": [
+        {
+          "name": "Authorization",
+          "description": "Bearer dth_... token from dropthehassle.com (menu > Connect your AI). Optional for scanning.",
+          "isSecret": true,
+          "isRequired": false
+        }
+      ]
+    }
+  ],
   "_meta": {
     "io.modelcontextprotocol.registry/publisher-provided": {
       "tools": [
-        { "name": "whoami", "description": "Show which DropTheHassle account the token belongs to." },
-        { "name": "list_sites", "description": "List the sites on your account with their live links and status." },
-        { "name": "search_domain", "description": "Check whether a domain is available and what it would cost. Read-only. It never buys." },
-        { "name": "deploy_site", "description": "Put a static site online on a free link, or update a site you already have." },
-        { "name": "point_domain", "description": "Move a domain already on your account onto one of your sites. Does not buy, does not edit DNS elsewhere." },
-        { "name": "choose_link", "description": "Rename a site's free link. The old link redirects. Call only after the owner agrees." },
-        { "name": "set_backend", "description": "Link an HTTPS backend you host elsewhere behind your domain, for API paths or the whole site." },
-        { "name": "get_checkout_link", "description": "Return a payment link the human opens and pays. The agent cannot pay it." },
-        { "name": "site_of_the_day_badge", "description": "Return the one line to paste for a Site of the day, week, month or year award. Read-only." },
-        { "name": "award_readiness", "description": "Checklist for a site on this account: favicon, share image, title, mobile viewport, page weight, custom domain and https. Read-only." }
+        {
+          "name": "whoami",
+          "description": "Show which DropTheHassle account the token belongs to."
+        },
+        {
+          "name": "list_sites",
+          "description": "List the sites on your account with their live links and status."
+        },
+        {
+          "name": "search_domain",
+          "description": "Check whether a domain is available and what it would cost. Read-only. It never buys."
+        },
+        {
+          "name": "deploy_site",
+          "description": "Put a static site online on a free link, or update a site you already have."
+        },
+        {
+          "name": "point_domain",
+          "description": "Move a domain already on your account onto one of your sites. Does not buy, does not edit DNS elsewhere."
+        },
+        {
+          "name": "choose_link",
+          "description": "Rename a site's free link. The old link redirects. Call only after the owner agrees."
+        },
+        {
+          "name": "set_backend",
+          "description": "Link an HTTPS backend you host elsewhere behind your domain, for API paths or the whole site."
+        },
+        {
+          "name": "get_checkout_link",
+          "description": "Return a payment link the human opens and pays. The agent cannot pay it."
+        },
+        {
+          "name": "site_of_the_day_badge",
+          "description": "Return the one line to paste for a Site of the day, week, month or year award. Read-only."
+        },
+        {
+          "name": "award_readiness",
+          "description": "Checklist for a site on this account: favicon, share image, title, mobile viewport, page weight, custom domain and https. Read-only."
+        }
       ]
     }
   }
