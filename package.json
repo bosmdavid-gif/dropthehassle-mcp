@@ -1,8 +1,8 @@
 {
   "name": "dropthehassle-mcp",
   "mcpName": "io.github.bosmdavid-gif/dropthehassle",
-  "version": "0.3.1",
-  "description": "MCP server for DropTheHassle: let your AI put sites online, find real free domains, and point names, without leaving your editor.",
+  "version": "0.4.2",
+  "description": "MCP server for DropTheHassle: let your AI put sites online, find real free domains, point names, and hand you a payment link. It can never spend your money.",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/bosmdavid-gif/dropthehassle-mcp.git"

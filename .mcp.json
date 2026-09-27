@@ -1,6 +1,7 @@
 {
   "mcpServers": {
     "dropthehassle": {
+      "type": "stdio",
       "command": "npx",
       "args": ["-y", "dropthehassle-mcp"],
       "env": {

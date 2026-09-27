@@ -1,0 +1,22 @@
+# Smithery stdio config: https://smithery.ai/docs/config#smitheryyaml
+startCommand:
+  type: stdio
+  configSchema:
+    type: object
+    required:
+      - dthToken
+    properties:
+      dthToken:
+        type: string
+        title: DropTheHassle token
+        description: Account token from https://dropthehassle.com (menu, Connect your AI). It starts with dth_.
+  commandFunction: |-
+    (config) => ({
+      command: "npx",
+      args: ["-y", "dropthehassle-mcp"],
+      env: {
+        DTH_TOKEN: config.dthToken
+      }
+    })
+  exampleConfig:
+    dthToken: dth_your-token-here
