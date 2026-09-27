@@ -1,19 +1,19 @@
 {
   "$schema": "https://static.modelcontextprotocol.io/schemas/2025-12-11/server.schema.json",
   "name": "io.github.bosmdavid-gif/dropthehassle",
-  "description": "One platform for domain, hosting, email, analytics and your back-end. AI native, no DNS.",
+  "description": "Domains, static hosting, DNS and email forwarding. Publish with your AI. It never spends money.",
   "title": "DropTheHassle",
   "websiteUrl": "https://dropthehassle.com",
   "repository": {
     "url": "https://github.com/bosmdavid-gif/dropthehassle-mcp",
     "source": "github"
   },
-  "version": "0.3.1",
+  "version": "0.4.2",
   "packages": [
     {
       "registryType": "npm",
       "identifier": "dropthehassle-mcp",
-      "version": "0.3.1",
+      "version": "0.4.2",
       "runtimeHint": "npx",
       "transport": {
         "type": "stdio"
@@ -21,7 +21,7 @@
       "environmentVariables": [
         {
           "name": "DTH_TOKEN",
-          "description": "Your DropTheHassle account token from the dashboard. The agent uses it to act on your account. It can deploy and manage, but there is no endpoint to spend money.",
+          "description": "Your DropTheHassle account token from the dashboard. The agent uses it to publish and manage. It cannot spend money.",
           "format": "string",
           "isRequired": true,
           "isSecret": true
@@ -32,13 +32,16 @@
   "_meta": {
     "io.modelcontextprotocol.registry/publisher-provided": {
       "tools": [
-        { "name": "whoami",        "description": "Show which DropTheHassle account and plan the token belongs to." },
-        { "name": "list_sites",    "description": "List the sites in your account with their live links and status." },
-        { "name": "search_domain", "description": "Check if a domain is available and what it costs, before you buy." },
-        { "name": "deploy_site",   "description": "Put a site online, or push an update to a site you already have." },
-        { "name": "point_domain",  "description": "Connect a domain you own to a site and set its DNS, redirects and email." },
-        { "name": "choose_link",   "description": "Rename a site's free link to a chosen name, with the old link redirecting." },
-        { "name": "set_backend",   "description": "Link your own backend (Railway, Render, anywhere) behind your domain: API paths or the whole site reverse-proxy to it." }
+        { "name": "whoami", "description": "Show which DropTheHassle account the token belongs to." },
+        { "name": "list_sites", "description": "List the sites on your account with their live links and status." },
+        { "name": "search_domain", "description": "Check whether a domain is available and what it would cost. Read-only. It never buys." },
+        { "name": "deploy_site", "description": "Put a static site online on a free link, or update a site you already have." },
+        { "name": "point_domain", "description": "Move a domain already on your account onto one of your sites. Does not buy, does not edit DNS elsewhere." },
+        { "name": "choose_link", "description": "Rename a site's free link. The old link redirects. Call only after the owner agrees." },
+        { "name": "set_backend", "description": "Link an HTTPS backend you host elsewhere behind your domain, for API paths or the whole site." },
+        { "name": "get_checkout_link", "description": "Return a payment link the human opens and pays. The agent cannot pay it." },
+        { "name": "site_of_the_day_badge", "description": "Return the one line to paste for a Site of the day, week, month or year award. Read-only." },
+        { "name": "award_readiness", "description": "Checklist for a site on this account: favicon, share image, title, mobile viewport, page weight, custom domain and https. Read-only." }
       ]
     }
   }
