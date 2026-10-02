@@ -4,6 +4,30 @@
 
 Package [`dropthehassle-mcp`](https://www.npmjs.com/package/dropthehassle-mcp) **0.4.2** in this repo (MIT, Node.js 18+). Registry name: `io.github.bosmdavid-gif/dropthehassle`.
 
+## Try it without an account
+
+`deploy_site` works without a token. The site goes live on a free HTTPS link and the reply contains a claim link for the human. On the hosted endpoint, `search_domain` and `whoami` also work without a token.
+
+Claude Code:
+
+```bash
+claude mcp add --transport http dropthehassle https://dropthehassle.com/mcp
+```
+
+Cursor, Windsurf or any client that takes a remote `mcp.json` entry:
+
+```json
+{
+  "mcpServers": {
+    "dropthehassle": {
+      "url": "https://dropthehassle.com/mcp"
+    }
+  }
+}
+```
+
+Add a token (below) when you want the AI to list your sites, update them or attach a domain that is already on your account.
+
 ## One-minute quickstart
 
 1. On [dropthehassle.com](https://dropthehassle.com), open the menu (top right) and choose **Connect your AI**. Copy the token. It starts with `dth_`.
@@ -84,11 +108,11 @@ Restart Windsurf after saving so the agent reloads the server.
 
 ### Smithery
 
-[`smithery.yaml`](./smithery.yaml) is a stdio config. The install wizard asks for `dthToken` and passes it as `DTH_TOKEN` to `npx -y dropthehassle-mcp`.
+[`smithery.yaml`](./smithery.yaml) is a stdio config. The install wizard asks for an optional `dthToken` and passes it as `DTH_TOKEN` to `npx -y dropthehassle-mcp`. Leave it empty to try `deploy_site` anonymously.
 
 ### Hosted remote
 
-The same server is published at `https://dropthehassle.com/mcp` (streamable HTTP). A client `mcp.json` can point at that URL instead of running `npx`. Send the token as a Bearer header. The header is optional for scanning.
+The same server is published at `https://dropthehassle.com/mcp` (streamable HTTP). A client `mcp.json` can point at that URL instead of running `npx`. Send the token as a Bearer header. Without the header, `initialize`, `tools/list`, `deploy_site`, `search_domain` and `whoami` still work; the other tools need the token.
 
 ```json
 {

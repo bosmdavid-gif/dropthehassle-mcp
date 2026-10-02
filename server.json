@@ -21,9 +21,9 @@
       "environmentVariables": [
         {
           "name": "DTH_TOKEN",
-          "description": "Your DropTheHassle account token from the dashboard. The agent uses it to publish and manage. It cannot spend money.",
+          "description": "Optional. Your DropTheHassle account token from the dashboard (menu, Connect your AI). Without it, deploy_site still publishes an anonymous site and returns a claim link; the other tools need it. It cannot spend money.",
           "format": "string",
-          "isRequired": true,
+          "isRequired": false,
           "isSecret": true
         }
       ]

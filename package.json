@@ -25,7 +25,13 @@
     "static-site",
     "hosting",
     "ai",
-    "vibecoding"
+    "vibecoding",
+    "mcp-server",
+    "claude-code",
+    "cursor",
+    "windsurf",
+    "custom-domain",
+    "domains"
   ],
   "author": "DropTheHassle",
   "homepage": "https://dropthehassle.com",
