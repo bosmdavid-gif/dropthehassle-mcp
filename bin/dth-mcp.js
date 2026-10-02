@@ -4,9 +4,9 @@
  * DropTheHassle MCP server  (npx dropthehassle-mcp)
  *
  * Lets an AI (Claude Desktop / Claude Code / any MCP client) act on the user's DropTheHassle account
- * so a vibecoder never has to leave their editor: put a static site online on a free link, find a REAL
+ * so a vibecoder never has to leave their editor: put a website online on a free link, find a REAL
  * free domain name, see what they already have, move a name already on the account onto a site, and
- * hand the human a payment link. DropTheHassle does domains, static hosting, DNS and email
+ * hand the human a payment link. DropTheHassle does domains, hosting, DNS and email
  * forwarding. It can NEVER spend money. The human opens the link and pays. The agent must not.
  *
  * Auth: the user pastes their account token (from dropthehassle.com -> menu -> Connect your AI) into
@@ -139,7 +139,7 @@ const TOOLS = [
   { name: 'search_domain', description: 'Check whether a domain name is available to register and what it would cost (EUR). Read-only: use it to propose a REAL free name. Buying is a human step in the dashboard; this never spends money.',
     inputSchema: { type: 'object', required: ['name'], properties: { name: { type: 'string', description: 'The domain to check, e.g. "myidea.com".' } } },
     run: async (a) => { const r = await request('GET', `${API}/ai/domains/search?q=${encodeURIComponent(a.name || '')}`); if (r.status >= 300) throw new Error(apiErr(r)); const d = r.data; return `${d.name}: ${d.available ? 'AVAILABLE' : 'taken'}${d.available ? ` (~EUR ${d.price_eur}/yr)` : ''}. ${d.note}`; } },
-  { name: 'deploy_site', description: 'Put a static site online on a free link. Point it at the project folder or the built folder. The server chooses index.html, dist/, build/, out/, _site/ or public/. Do not pick the folder yourself. With a DTH_TOKEN: pass site_id to update that site. Omitting site_id fills the oldest reserved address on the account (from Get an AI code) instead of creating a second site. Without a token the site goes live anonymously and you MUST give the human the claim_url. Free only; never buys a name. /ai tools other than this one stay signed in, so an agent can never spend money.',
+  { name: 'deploy_site', description: 'Put a website online on a free link. Point it at the project folder or the built folder. The server chooses index.html, dist/, build/, out/, _site/ or public/. Do not pick the folder yourself. With a DTH_TOKEN: pass site_id to update that site. Omitting site_id fills the oldest reserved address on the account (from Get an AI code) instead of creating a second site. Without a token the site goes live anonymously and you MUST give the human the claim_url. Free only; never buys a name. /ai tools other than this one stay signed in, so an agent can never spend money.',
     inputSchema: { type: 'object', required: ['folder'], properties: { folder: { type: 'string', description: 'Absolute path to the project folder or the built site. The server chooses the folder that holds index.html.' }, site_id: { type: 'number', description: 'Optional: an existing site to update. Omit it to fill the oldest reserved site on this account.' }, slug: { type: 'string', description: 'Optional, signed-in only: the address label for a NEW site, e.g. "myproject". Errors when taken, so propose another.' } } },
     run: async (a) => {
       const dir = path.resolve(a.folder || '.');
@@ -166,7 +166,7 @@ const TOOLS = [
   { name: 'choose_link', description: "Rename a site's free link to <name>.dropthehassle.app. Changing a public URL is the human owner's decision: propose the name first, and only call this with confirm=true after they explicitly said yes. Safe: the old link keeps redirecting to the new name. No money.",
     inputSchema: { type: 'object', required: ['site_id', 'name', 'confirm'], properties: { site_id: { type: 'number', description: 'The site to rename (from list_sites).' }, name: { type: 'string', description: 'The label only, e.g. "myproject" for myproject.dropthehassle.app.' }, confirm: { type: 'boolean', description: 'true ONLY after the human owner explicitly approved this exact name.' } } },
     run: async (a) => { const r = await request('POST', `${API}/ai/subdomain`, { json: { site_id: a.site_id, name: a.name, confirm: !!a.confirm } }); if (r.status >= 300) throw new Error(apiErr(r)); return `Live at ${r.data.staging_url} (the previous link redirects there).`; } },
-  { name: 'set_backend', description: "Link an HTTPS backend (Railway, Render, Fly, anywhere) behind a DropTheHassle name. With uploaded files the path rules (default /api/*) reverse-proxy to the backend and the rest stays static; without uploaded files the WHOLE site serves from the backend. WITHOUT site_id it creates a fresh FREE site first: a backend-only project goes live on its own link in one call. Perfect for a deploy script: call this with the new URL after every backend deploy. Pass url=\"\" (with site_id) to unlink. No money.",
+  { name: 'set_backend', description: "Link an HTTPS backend (Railway, Render, Fly, anywhere) behind a DropTheHassle name. With uploaded files the path rules (default /api/*) reverse-proxy to the backend and other paths keep serving from your site; without uploaded files the WHOLE site serves from the backend. WITHOUT site_id it creates a fresh FREE site first: a backend-only project goes live on its own link in one call. Perfect for a deploy script: call this with the new URL after every backend deploy. Pass url=\"\" (with site_id) to unlink. No money.",
     inputSchema: { type: 'object', required: ['url'], properties: { site_id: { type: 'number', description: 'Optional: an existing site to link (from list_sites). Omit to create a new free site served fully from the backend.' }, url: { type: 'string', description: 'The HTTPS origin of the backend, e.g. "https://myapp.up.railway.app". Empty string (with site_id) unlinks.' }, paths: { type: 'array', items: { type: 'string' }, description: 'Optional path rules for split mode, e.g. ["/api/*", "/webhooks/*"]. Default ["/api/*"].' }, slug: { type: 'string', description: 'Optional address label for a NEW site, e.g. "myapp" -> myapp.dropthehassle.app. Errors when taken.' } } },
     run: async (a) => {
       const payload = { url: a.url || '', paths: a.paths || null };
@@ -176,7 +176,7 @@ const TOOLS = [
       if (r.status >= 300) throw new Error(apiErr(r));
       const b = r.data.backend || {};
       if (!b.url) return `Backend unlinked: site ${a.site_id} serves its uploaded files again.`;
-      const mode = b.mode === 'full' ? 'the WHOLE site serves from the backend' : `paths ${JSON.stringify(b.paths)} proxy to the backend, the rest stays static`;
+      const mode = b.mode === 'full' ? 'the WHOLE site serves from the backend' : `paths ${JSON.stringify(b.paths)} proxy to the backend, other paths keep serving from your site`;
       const health = b.status ? ` First check: ${b.status}${b.latency_ms != null ? ` (${b.latency_ms}ms)` : ''}.` : '';
       const where = r.data.created ? `NEW free site ${r.data.live_url} (site_id ${r.data.site_id})` : `site ${r.data.site_id || a.site_id}`;
       return `Linked ${b.url} to ${where}: ${mode}.${health}`;
