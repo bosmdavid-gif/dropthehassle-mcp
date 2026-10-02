@@ -1,12 +1,7 @@
 {
   "mcpServers": {
     "dropthehassle": {
-      "type": "stdio",
-      "command": "npx",
-      "args": ["-y", "dropthehassle-mcp"],
-      "env": {
-        "DTH_TOKEN": "${env:DTH_TOKEN}"
-      }
+      "url": "https://dropthehassle.com/mcp"
     }
   }
 }
