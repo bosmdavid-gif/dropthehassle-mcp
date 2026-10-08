@@ -1,6 +1,6 @@
 # Install the DropTheHassle MCP server (Cline)
 
-This file is for an agent installing the server. Do the steps in order. Do not clone this repository, and do not build it. The local server is the npm package `dropthehassle-mcp` (this repo, version 0.4.2, Node.js 18+). It has no dependencies.
+This file is for an agent installing the server. Do the steps in order. Do not clone this repository, and do not build it. The local server is the npm package `dropthehassle-mcp` (this repo, version 0.5.0, Node.js 18+). Since 0.5.0 it is a small alias: its one dependency, the `dropthehassle` package (same version), contains the server.
 
 Pick one transport. Local stdio can publish a folder on this machine. The remote endpoint cannot read a local folder.
 
@@ -16,7 +16,7 @@ Ask the human to do this. You cannot create the token yourself.
 
 Keep the token only in the MCP settings file on the human's machine. Do not commit it, and do not paste it into a repository, a log, or a chat transcript.
 
-The process starts with no token. On the local server every tool other than `deploy_site` then returns an error that names `DTH_TOKEN`. On the remote server, `initialize`, `tools/list`, and `ping` work with no token. Account tools, including the read-only `search_domain` check, ask for the bearer token.
+The process starts with no token. On the local server, `deploy_site` and `search_domain` work with no token; every other tool returns a connect link and a short code for the human instead of running (or set `DTH_TOKEN`). On the remote server, `initialize`, `tools/list`, `ping`, `deploy_site`, `search_domain`, and `whoami` work with no token. Account tools ask for the bearer token.
 
 ## 2. Local stdio
 
@@ -25,7 +25,7 @@ Requires Node.js 18 or newer. Check with `node -v`.
 The command is:
 
 ```bash
-npx -y dropthehassle-mcp
+npx -y dropthehassle-mcp@latest
 ```
 
 The process reads the account token from the environment variable `DTH_TOKEN`. That is the only token variable. Leave `DTH_API` unset unless the human has asked for a different API base. The default base is `https://dropthehassle.com/api/v1`.
@@ -45,7 +45,7 @@ Paste the human's token as the literal `DTH_TOKEN` string. Use the token itself,
   "mcpServers": {
     "dropthehassle": {
       "command": "npx",
-      "args": ["-y", "dropthehassle-mcp"],
+      "args": ["-y", "dropthehassle-mcp@latest"],
       "env": {
         "DTH_TOKEN": "dth_your-token-here"
       },
@@ -56,7 +56,7 @@ Paste the human's token as the literal `DTH_TOKEN` string. Use the token itself,
 }
 ```
 
-On Windows, if the editor reports that it cannot spawn `npx`, set `command` to `cmd` and `args` to `["/c", "npx", "-y", "dropthehassle-mcp"]`. The first launch downloads the package. If Cline times out, raise that server's `timeout` (seconds) and retry.
+On Windows, if the editor reports that it cannot spawn `npx`, set `command` to `cmd` and `args` to `["/c", "npx", "-y", "dropthehassle-mcp@latest"]`. The first launch downloads the package. If Cline times out, raise that server's `timeout` (seconds) and retry.
 
 ## 3. Remote Streamable HTTP
 
@@ -105,7 +105,7 @@ printf '%s\n' \
   '{"jsonrpc":"2.0","id":1,"method":"initialize","params":{"protocolVersion":"2024-11-05","capabilities":{},"clientInfo":{"name":"cline","version":"0.0.1"}}}' \
   '{"jsonrpc":"2.0","method":"notifications/initialized"}' \
   '{"jsonrpc":"2.0","id":2,"method":"tools/list"}' \
-  | npx -y dropthehassle-mcp
+  | npx -y dropthehassle-mcp@latest
 ```
 
 Remote. Expect HTTP 200 and a JSON body (`Content-Type: application/json`) whose `serverInfo.name` is `dropthehassle`.
@@ -122,22 +122,22 @@ curl -sS https://dropthehassle.com/mcp \
   -d '{"jsonrpc":"2.0","id":2,"method":"tools/list"}'
 ```
 
-The public tools are `whoami`, `list_sites`, `search_domain`, `deploy_site`, `point_domain`, `choose_link`, `set_backend`, `get_checkout_link`, `site_of_the_day_badge`, and `award_readiness`.
+`tools/list` includes `deploy_site`, `search_domain`, `whoami`, `list_sites`, `point_domain`, `choose_link`, `set_backend`, and `get_checkout_link`, plus the account tools. The full list grows between releases, so read it from `tools/list`.
 
-### Domain price check (token required)
+### Domain price check (no token needed)
 
 Call `search_domain` with `{ "name": "example.com" }`. It is read-only. It reports whether that name is available and, when it is, the price in EUR. It does not buy the domain.
 
 From Cline, after the server is connected, ask it to check whether `example.com` is free.
 
-From the shell, local (the environment must contain `DTH_TOKEN`):
+From the shell, local:
 
 ```bash
 printf '%s\n' \
   '{"jsonrpc":"2.0","id":1,"method":"initialize","params":{"protocolVersion":"2024-11-05","capabilities":{},"clientInfo":{"name":"cline","version":"0.0.1"}}}' \
   '{"jsonrpc":"2.0","method":"notifications/initialized"}' \
   '{"jsonrpc":"2.0","id":2,"method":"tools/call","params":{"name":"search_domain","arguments":{"name":"example.com"}}}' \
-  | npx -y dropthehassle-mcp
+  | npx -y dropthehassle-mcp@latest
 ```
 
 Remote:
@@ -146,19 +146,18 @@ Remote:
 curl -sS https://dropthehassle.com/mcp \
   -H 'Content-Type: application/json' \
   -H 'Accept: application/json, text/event-stream' \
-  -H 'Authorization: Bearer dth_your-token-here' \
   -d '{"jsonrpc":"2.0","id":3,"method":"tools/call","params":{"name":"search_domain","arguments":{"name":"example.com"}}}'
 ```
 
-On the local server a successful result is one text line: the domain, then `AVAILABLE` or `taken`. An available name adds ` (~EUR <price>/yr)`. The remote tool's description is the same read-only check (availability and a cost in EUR, and it never spends money).
+A successful result is text that starts with the domain and its status (for example `example.com: Taken.` locally, `example.com: Unavailable.` remotely), with the price when the name is available. It is a read-only check and never spends money.
 
-With no token the server is still up and the call returns `isError: true`. The local text is `No DropTheHassle token set. Add DTH_TOKEN (from dropthehassle.com -> menu -> Connect your AI) to this server's env. deploy_site works without a token and returns a claim link for the human.` The remote text is `This needs a DropTheHassle token. Sign up at https://dropthehassle.com, menu > Connect your AI, then send it as Authorization: Bearer <token>.` Put the token in `DTH_TOKEN` or in the bearer header and call `search_domain` again.
+An account tool called with no token returns `isError: true`. Locally the text gives the human a connect link and a short code to approve; remotely it says to send the token as `Authorization: Bearer <token>`. Connect (or put the token in `DTH_TOKEN` or the bearer header) and call the tool again.
 
 ## Troubleshooting
 
 | What you see | What to do |
 | --- | --- |
-| Local tool says no `DTH_TOKEN` is set | Put the `dth_` token in that server's `env.DTH_TOKEN` and restart the MCP server. |
+| Local account tool returns a connect link | The human opens the link and approves the code, or put the `dth_` token in that server's `env.DTH_TOKEN` and restart the MCP server. |
 | Remote tool says it needs a DropTheHassle token | Add `Authorization: Bearer <token>` and retry. |
 | `Invalid or revoked API token` | The human copies a new token from the menu, **Connect your AI**. |
 | Remote client fails immediately, or uses SSE | Set `"type": "streamableHttp"` and the URL `https://dropthehassle.com/mcp`. |

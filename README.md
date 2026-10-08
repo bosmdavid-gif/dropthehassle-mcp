@@ -2,7 +2,7 @@
 
 Your AI puts your site online on a free link with HTTPS. Your own .com later. No token needed. [DropTheHassle](https://dropthehassle.com) also does domains, hosting, DNS and email forwarding. This server lets your AI publish your site, check whether a name is free, and move a domain that is already on your account onto one of your sites. It can hand you a payment link on `checkout.stripe.com`. It cannot spend your money, and it cannot turn email on. Buying a domain, or turning on email forwarding, stays a click you make.
 
-Package [`dropthehassle-mcp`](https://www.npmjs.com/package/dropthehassle-mcp) **0.4.2** in this repo (MIT, Node.js 18+). Registry name: `io.github.bosmdavid-gif/dropthehassle`.
+Package [`dropthehassle-mcp`](https://www.npmjs.com/package/dropthehassle-mcp) **0.5.0** in this repo (MIT, Node.js 18+). Registry name: `io.github.bosmdavid-gif/dropthehassle`.
 
 Prices are written as **€19 / $19**. Contact: [hello@dropthehassle.com](mailto:hello@dropthehassle.com).
 

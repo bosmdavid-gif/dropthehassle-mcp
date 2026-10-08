@@ -3,7 +3,7 @@
   "name": "io.github.bosmdavid-gif/dropthehassle",
   "title": "DropTheHassle",
   "description": "Your AI puts your site online on a free link with HTTPS. Your own .com later. No token needed.",
-  "version": "0.4.3",
+  "version": "0.5.0",
   "websiteUrl": "https://dropthehassle.com",
   "repository": {
     "url": "https://github.com/bosmdavid-gif/dropthehassle-mcp",
@@ -13,7 +13,9 @@
     {
       "src": "https://raw.githubusercontent.com/bosmdavid-gif/dropthehassle-mcp/main/logo.png",
       "mimeType": "image/png",
-      "sizes": ["512x512"]
+      "sizes": [
+        "512x512"
+      ]
     }
   ],
   "remotes": [
@@ -26,7 +28,7 @@
     {
       "registryType": "npm",
       "identifier": "dropthehassle-mcp",
-      "version": "0.4.2",
+      "version": "0.5.0",
       "runtimeHint": "npx",
       "transport": {
         "type": "stdio"
@@ -34,7 +36,7 @@
       "environmentVariables": [
         {
           "name": "DTH_TOKEN",
-          "description": "Optional. Not needed to put a site online. Only for account tools: dropthehassle.com, menu, Connect your AI.",
+          "description": "Optional. Not needed to put a site online. For account tools, the connect tool links this computer with one link.",
           "format": "string",
           "isRequired": false,
           "isSecret": true
@@ -45,14 +47,42 @@
   "_meta": {
     "io.modelcontextprotocol.registry/publisher-provided": {
       "tools": [
-        { "name": "deploy_site", "description": "Put your site online on a free link with HTTPS, or update it. No account needed to start." },
-        { "name": "search_domain", "description": "Check if a domain is free and what it costs. It never buys." },
-        { "name": "whoami", "description": "Show what works right now, and which account is connected." },
-        { "name": "list_sites", "description": "List the sites on your account with their live links." },
-        { "name": "choose_link", "description": "Rename a site's free link after you say yes. The old link keeps working." },
-        { "name": "set_backend", "description": "Link your server part on AWS, Google Cloud, DigitalOcean or your own server to your site." },
-        { "name": "point_domain", "description": "Move a domain already on your account to one of your sites. It never buys." },
-        { "name": "get_checkout_link", "description": "Give you a payment link for your own .com. You open it and pay. Your AI never can." }
+        {
+          "name": "deploy_site",
+          "description": "Put your site online on a free link with HTTPS, or update it. No account needed to start."
+        },
+        {
+          "name": "search_domain",
+          "description": "Check if a domain is free and what it costs. It never buys."
+        },
+        {
+          "name": "whoami",
+          "description": "Show what works right now, and which account is connected."
+        },
+        {
+          "name": "connect",
+          "description": "Link this computer to your account with one link and a short code. No token to paste."
+        },
+        {
+          "name": "list_sites",
+          "description": "List the sites on your account with their live links."
+        },
+        {
+          "name": "choose_link",
+          "description": "Rename a site's free link after you say yes. The old link keeps working."
+        },
+        {
+          "name": "set_backend",
+          "description": "Link your server part on AWS, Google Cloud, DigitalOcean or your own server to your site."
+        },
+        {
+          "name": "point_domain",
+          "description": "Move a domain already on your account to one of your sites. It never buys."
+        },
+        {
+          "name": "get_checkout_link",
+          "description": "Give you a payment link for your own .com. You open it and pay. Your AI never can."
+        }
       ]
     }
   }
