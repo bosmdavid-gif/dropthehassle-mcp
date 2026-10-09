@@ -1,6 +1,34 @@
 # DropTheHassle MCP server
 
-Your AI puts your site online on a free link with HTTPS. Your own .com later. No token needed. [DropTheHassle](https://dropthehassle.com) also does domains, hosting, DNS and email forwarding. This server lets your AI publish your site, check whether a name is free, and move a domain that is already on your account onto one of your sites. It can hand you a payment link on `checkout.stripe.com`. It cannot spend your money, and it cannot turn email on. Buying a domain, or turning on email forwarding, stays a click you make.
+How do I get my site online with my AI? Add this server and say "put this site online": your AI puts it live on a free HTTPS link, with no account needed.
+
+```sh
+# Claude Code
+claude mcp add dropthehassle -- npx -y dropthehassle-mcp@latest
+
+# Cursor: add to .cursor/mcp.json
+{
+  "mcpServers": {
+    "dropthehassle": {
+      "command": "npx",
+      "args": ["-y", "dropthehassle-mcp@latest"]
+    }
+  }
+}
+```
+
+Or skip the install and use the hosted connector: `https://dropthehassle.com/mcp` (no token for a first deploy). From a terminal, the same thing is `npx -y dropthehassle@latest deploy`.
+
+What your AI can do:
+
+1. Put the site live on a free HTTPS link (`deploy_site`), with no account, and give you a claim link.
+2. Check whether a domain name is free and what it costs (`search_domain`), straight from the domain registry.
+3. Hand you a payment link for your own .com: €19 / $19 a year, including VAT in the EU, the same every year. You pay on Stripe's page, and the site then goes live on the domain with HTTPS and no DNS setup.
+4. Hand you a payment link for a real mailbox on that domain: it sends and receives, read in the dashboard webmail or any mail app over IMAP/SMTP. €5 / $5 a month, including VAT in the EU.
+
+It cannot spend money. You open the link and pay. A DropTheHassle payment link is always on `checkout.stripe.com`. In the ChatGPT and Claude directory apps, buying happens on dropthehassle.com.
+
+Got a server part too? Keep it on AWS, Google Cloud, DigitalOcean or your own server, and your AI links it to your site in one step.
 
 Package [`dropthehassle-mcp`](https://www.npmjs.com/package/dropthehassle-mcp) **0.5.0** in this repo (MIT, Node.js 18+). Registry name: `io.github.bosmdavid-gif/dropthehassle`.
 
