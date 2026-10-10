@@ -116,6 +116,12 @@ To add it by hand, put this in `~/.cursor/mcp.json` (all projects) or `.cursor/m
 
 The repo root [`.mcp.json`](./.mcp.json) is the same block, for clients that detect an MCP server from the repository.
 
+### Zed
+
+Install the Zed extension `mcp-server-dropthehassle` once it is in the marketplace.
+
+Until then, add a remote MCP server: Zed **Settings → AI → MCP Servers → Add Remote Server** → `https://dropthehassle.com/mcp` (no token for a first publish).
+
 ### Windsurf
 
 Cascade reads `~/.codeium/windsurf/mcp_config.json` (Windows: `%USERPROFILE%\.codeium\windsurf\mcp_config.json`). Open it from the Cascade MCP panel. New Devin Local tabs keep secrets in the gitignored project file `.devin/mcp_config.local.json`. Both use the same shape:
