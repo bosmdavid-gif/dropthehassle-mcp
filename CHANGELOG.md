@@ -1,5 +1,12 @@
 # Changelog
 
+## 0.5.1 (2026-10-10)
+
+Published on npm as `dropthehassle-mcp@0.5.1` on 10 Oct 2026, together with `dropthehassle@0.5.1`. This repository was synced to that version the same day.
+
+- `package.json` depends on `dropthehassle` 0.5.1. `bin/dth-mcp.js` is unchanged.
+- `server.json` version and package version are 0.5.1. The description in this file stays the 0.5.0 text until the 0.5.1 entry is published to the official MCP Registry.
+
 ## 0.5.0 (2026-10-04)
 
 Published on npm as `dropthehassle-mcp@0.5.0` on 4 Oct 2026. This repository was synced to that tarball on 8 Oct 2026. The tag `v0.5.0` points at that sync. Nothing was republished to npm.

@@ -1,7 +1,7 @@
 {
   "name": "dropthehassle-mcp",
   "mcpName": "io.github.bosmdavid-gif/dropthehassle",
-  "version": "0.5.0",
+  "version": "0.5.1",
   "description": "MCP server for DropTheHassle (alias of the dropthehassle package, bin dropthehassle-mcp): let your AI put sites online, find real available domain names and hand you a payment link. One link connects it to your account. It can never spend your money.",
   "repository": {
     "type": "git",
@@ -15,7 +15,7 @@
     "node": ">=18"
   },
   "dependencies": {
-    "dropthehassle": "0.5.0"
+    "dropthehassle": "0.5.1"
   },
   "files": [
     "bin",

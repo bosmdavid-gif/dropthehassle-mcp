@@ -30,7 +30,7 @@ It cannot spend money. You open the link and pay. A DropTheHassle payment link i
 
 Got a server part too? Keep it on AWS, Google Cloud, DigitalOcean or your own server, and your AI links it to your site in one step.
 
-Package [`dropthehassle-mcp`](https://www.npmjs.com/package/dropthehassle-mcp) **0.5.0** in this repo (MIT, Node.js 18+). Registry name: `io.github.bosmdavid-gif/dropthehassle`.
+Package [`dropthehassle-mcp`](https://www.npmjs.com/package/dropthehassle-mcp) **0.5.1** in this repo (MIT, Node.js 18+). Registry name: `io.github.bosmdavid-gif/dropthehassle`.
 
 Prices are written as **€19 / $19**. Contact: [hello@dropthehassle.com](mailto:hello@dropthehassle.com).
 

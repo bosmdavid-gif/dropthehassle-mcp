@@ -3,7 +3,7 @@
   "name": "io.github.bosmdavid-gif/dropthehassle",
   "title": "DropTheHassle",
   "description": "Your AI puts your site online on a free link with HTTPS. Your own .com later. No token needed.",
-  "version": "0.5.0",
+  "version": "0.5.1",
   "websiteUrl": "https://dropthehassle.com",
   "repository": {
     "url": "https://github.com/bosmdavid-gif/dropthehassle-mcp",
@@ -28,7 +28,7 @@
     {
       "registryType": "npm",
       "identifier": "dropthehassle-mcp",
-      "version": "0.5.0",
+      "version": "0.5.1",
       "runtimeHint": "npx",
       "transport": {
         "type": "stdio"
