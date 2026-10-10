@@ -5,7 +5,7 @@
 Published on npm as `dropthehassle-mcp@0.5.1` on 10 Oct 2026, together with `dropthehassle@0.5.1`. This repository was synced to that version the same day.
 
 - `package.json` depends on `dropthehassle` 0.5.1. `bin/dth-mcp.js` is unchanged.
-- `server.json` version and package version are 0.5.1. The description in this file stays the 0.5.0 text until the 0.5.1 entry is published to the official MCP Registry.
+- `server.json` version and package version are 0.5.1. Published to the official MCP Registry on 10 Oct 2026 with the description "Your AI puts your site online: free HTTPS link, or a .com for €19 that goes live with no DNS."
 
 ## 0.5.0 (2026-10-04)
 
