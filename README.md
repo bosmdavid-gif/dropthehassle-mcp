@@ -1,6 +1,6 @@
 # DropTheHassle MCP server
 
-How do I get my site online with my AI? Add this server and say "put this site online": your AI puts it live on a free HTTPS link, with no account needed.
+How do I get my site online with my AI? Add this server and say "publish this site": your AI makes it live on a free HTTPS link, with no account needed.
 
 ```sh
 # Claude Code
@@ -21,7 +21,7 @@ Or skip the install and use the hosted connector: `https://dropthehassle.com/mcp
 
 What your AI can do:
 
-1. Put the site live on a free HTTPS link (`deploy_site`), with no account, and give you a claim link.
+1. Publish the site on a free HTTPS link (`deploy_site`), with no account, and give you a claim link.
 2. Check whether a domain name is free and what it costs (`search_domain`), straight from the domain registry.
 3. Hand you a payment link for your own .com: €19 / $19 a year, including VAT in the EU, the same every year. You pay on Stripe's page, and the site then goes live on the domain with HTTPS and no DNS setup.
 4. Hand you a payment link for a real mailbox on that domain: it sends and receives, read in the dashboard webmail or any mail app over IMAP/SMTP. €5 / $5 a month, including VAT in the EU.
@@ -170,7 +170,7 @@ The same server is published at `https://dropthehassle.com/mcp` (streamable HTTP
 | `whoami` | Shows which DropTheHassle account the token belongs to. |
 | `list_sites` | Lists the sites on the account with their live links, status, and domains. |
 | `search_domain` | Checks whether a domain is available and what it would cost. Read-only. It never buys. |
-| `deploy_site` | Puts a folder that contains `index.html` online on a free link, or updates an existing site. The server chooses the built folder. Never buys a domain. Without a token the site is anonymous and you must give the human the claim link. |
+| `deploy_site` | Publishes a folder that contains `index.html` on a free link, or updates an existing site. The server chooses the built folder. Never buys a domain. Without a token the site is anonymous and you must give the human the claim link. |
 | `point_domain` | Moves a domain already on your account onto one of your sites. It does not buy a name and it does not edit DNS at another registrar. |
 | `choose_link` | Renames a site's free link (`name.dropthehassle.app`). The old link redirects to the new one. Call it only after the owner has agreed (`confirm: true`). |
 | `set_backend` | Routes API paths, or the whole site, to an HTTPS backend hosted elsewhere (for example Railway or Render). An empty `url` unlinks it. |
@@ -178,7 +178,7 @@ The same server is published at `https://dropthehassle.com/mcp` (streamable HTTP
 | `site_of_the_day_badge` | Returns the one line to paste before `</body>` for a Site of the day, week, month or year award, plus instructions. Read-only. The ribbon shows only during the winning period. |
 | `award_readiness` | Checklist for a site on this account (favicon, share image, title and description, mobile viewport, page weight, custom domain, https, a real page), each with a fix hint. Read-only. |
 
-Examples: *"put the site in ./dist online"*, *"is pocketlighthouse.com free?"*, *"give me a payment link for that .com"*.
+Examples: *"publish the site in ./dist"*, *"is pocketlighthouse.com free?"*, *"give me a payment link for that .com"*.
 
 ## Operator
 
