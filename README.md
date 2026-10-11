@@ -17,7 +17,7 @@ claude mcp add dropthehassle -- npx -y dropthehassle-mcp@latest
 }
 ```
 
-Or skip the install and use the hosted connector: `https://dropthehassle.com/mcp` (no token for a first deploy). From a terminal, the same thing is `npx -y dropthehassle@latest deploy`.
+Or skip the install and use the hosted connector: `https://dropthehassle.com/mcp` (no token for a first deploy). From a terminal, the same thing is `npx -y dropthehassle@latest deploy ./dist --email <the user's email>`. Ask the user for their email first, then run it.
 
 What your AI can do:
 
