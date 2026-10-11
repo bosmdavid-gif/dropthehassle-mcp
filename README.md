@@ -17,7 +17,7 @@ claude mcp add dropthehassle -- npx -y dropthehassle-mcp@latest
 }
 ```
 
-Or skip the install and use the hosted connector: `https://dropthehassle.com/mcp` (no token for a first deploy). From a terminal, the same thing is `npx -y dropthehassle@latest deploy . --email <the user's email>`. Ask the user for their email first, then run it.
+Or skip the install and use the hosted connector: `https://dropthehassle.com/mcp` (no token and no email for a first deploy). Your AI publishes the site first and gives you the live link and a claim link; right after, it can get you a .com (payment link, no DNS) and an optional mailbox that sends and receives. From a terminal, the same thing is `npx -y dropthehassle@latest deploy . --email <the user's email>` until the next npm release makes email optional there too.
 
 What your AI can do:
 
