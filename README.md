@@ -177,6 +177,8 @@ The same server is published at `https://dropthehassle.com/mcp` (streamable HTTP
 | `list_site_files` | Lists the file paths of a live site. Read-only. Works with an account token or that site's own token. On the hosted endpoint now; in the npm package from its next release. |
 | `get_site_file` | Returns one file of a live site (for example `index.html` or `css/site.css`). Read-only. Same tokens as `list_site_files`. |
 | `edit_site_file` | Changes or adds one text file on a live site without a full folder Update; other files stay as they are. Restore undoes the last Update or Edit files save. Same tokens as `list_site_files`. |
+| `enable_form` | Collect leads on a claimed site: turns the contact form on or off. Visitors send a name, email and message; each message goes to the owner's mailbox and is kept for the dashboard (See messages). Claim the site first. Does not charge. On the hosted endpoint now; in the npm package from its next release. |
+| `list_form_submissions` | Lists recent messages from a claimed site's contact form. Read-only. |
 | `set_backend` | Routes API paths, or the whole site, to an HTTPS backend hosted elsewhere (for example Railway or Render). An empty `url` unlinks it. |
 | `get_checkout_link` | Returns a payment link the human opens and pays. The agent must not open, fill in, or pay it. After payment the domain goes live on that site. Only for sites on the account. For an anonymous site, give the human the claim link first. |
 | `site_of_the_day_badge` | Returns the one line to paste before `</body>` for a Site of the day, week, month or year award, plus instructions. Read-only. The ribbon shows only during the winning period. |
