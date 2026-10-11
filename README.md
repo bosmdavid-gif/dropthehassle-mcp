@@ -179,6 +179,8 @@ The same server is published at `https://dropthehassle.com/mcp` (streamable HTTP
 | `edit_site_file` | Changes or adds one text file on a live site without a full folder Update; other files stay as they are. Restore undoes the last Update or Edit files save. Same tokens as `list_site_files`. |
 | `enable_form` | Collect leads on a claimed site: turns the contact form on or off. Visitors send a name, email and message; each message goes to the owner's mailbox and is kept for the dashboard (See messages). Claim the site first. Does not charge. On the hosted endpoint now; in the npm package from its next release. |
 | `list_form_submissions` | Lists recent messages from a claimed site's contact form. Read-only. |
+| `set_site_password` | Locks a claimed site with a password visitors type before it opens. An empty password makes it public. Works on the free link and on a custom domain. Does not charge. On the hosted endpoint now; in the npm package from its next release. |
+| `clear_site_password` | Removes the password from a claimed site so anyone can open it. Does not charge. |
 | `set_backend` | Routes API paths, or the whole site, to an HTTPS backend hosted elsewhere (for example Railway or Render). An empty `url` unlinks it. |
 | `get_checkout_link` | Returns a payment link the human opens and pays. The agent must not open, fill in, or pay it. After payment the domain goes live on that site. Only for sites on the account. For an anonymous site, give the human the claim link first. |
 | `site_of_the_day_badge` | Returns the one line to paste before `</body>` for a Site of the day, week, month or year award, plus instructions. Read-only. The ribbon shows only during the winning period. |
