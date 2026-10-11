@@ -1,6 +1,6 @@
 # DropTheHassle MCP server
 
-How do I get my site online with my AI? Add this server and say "publish this site": your AI makes it live on a free HTTPS link, with no account needed.
+How do I get my site live with my AI? Add this server and say "publish this site": your AI puts your site live on a free HTTPS link with no account. Email is optional: after go-live, it asks once if you want a .com (€19/$19, no DNS) and an optional mailbox. No tool spends money.
 
 ```sh
 # Claude Code
@@ -17,7 +17,7 @@ claude mcp add dropthehassle -- npx -y dropthehassle-mcp@latest
 }
 ```
 
-Or skip the install and use the hosted connector: `https://dropthehassle.com/mcp` (no token and no email for a first deploy). Your AI publishes the site first and gives you the live link and a claim link; right after, it can get you a .com (payment link, no DNS) and an optional mailbox that sends and receives. From a terminal, the same thing is `npx -y dropthehassle@latest deploy . --email <the user's email>`.
+Or skip the install and use the hosted connector: `https://dropthehassle.com/mcp` (no token and no email for a first deploy). Your AI publishes the site first and gives you the live link and a claim link; after go-live, it asks once if you want a .com (payment link, no DNS) and an optional mailbox that sends and receives. From a terminal, the same thing is `npx -y dropthehassle@latest deploy .` (email optional; add `--email you@example.com` after go-live to get the claim link mailed).
 
 What your AI can do:
 
