@@ -17,7 +17,7 @@ claude mcp add dropthehassle -- npx -y dropthehassle-mcp@latest
 }
 ```
 
-Or skip the install and use the hosted connector: `https://dropthehassle.com/mcp` (no token and no email for a first deploy). Your AI publishes the site first and gives you the live link and a claim link; right after, it can get you a .com (payment link, no DNS) and an optional mailbox that sends and receives. From a terminal, the same thing is `npx -y dropthehassle@latest deploy . --email <the user's email>` until the next npm release makes email optional there too.
+Or skip the install and use the hosted connector: `https://dropthehassle.com/mcp` (no token and no email for a first deploy). Your AI publishes the site first and gives you the live link and a claim link; right after, it can get you a .com (payment link, no DNS) and an optional mailbox that sends and receives. From a terminal, the same thing is `npx -y dropthehassle@latest deploy . --email <the user's email>`.
 
 What your AI can do:
 
@@ -30,7 +30,7 @@ It cannot spend money. You open the link and pay. A DropTheHassle payment link i
 
 Got a server part too? Keep it on AWS, Google Cloud, DigitalOcean or your own server, and your AI links it to your site in one step.
 
-Package [`dropthehassle-mcp`](https://www.npmjs.com/package/dropthehassle-mcp) **0.5.1** in this repo (MIT, Node.js 18+). Registry name: `io.github.bosmdavid-gif/dropthehassle`.
+Package [`dropthehassle-mcp`](https://www.npmjs.com/package/dropthehassle-mcp) **0.5.2** (MIT, Node.js 18+). Registry name: `io.github.bosmdavid-gif/dropthehassle`.
 
 Prices are written as **€19 / $19**. Contact: [hello@dropthehassle.com](mailto:hello@dropthehassle.com).
 
@@ -174,14 +174,14 @@ The same server is published at `https://dropthehassle.com/mcp` (streamable HTTP
 | `point_domain` | Moves a domain already on your account onto one of your sites. It does not buy a name and it does not edit DNS at another registrar. |
 | `choose_link` | Renames a site's free link (`name.dropthehassle.app`). The old link redirects to the new one. Call it only after the owner has agreed (`confirm: true`). |
 | `rollback_site` | Restores the previous version of a claimed site (one step back). Doing it again restores the version that was replaced. Call it only after the owner has agreed (`confirm: true`). The owner can also press Restore on the site's Update screen. Does not charge. |
-| `list_site_files` | Lists the file paths of a live site. Read-only. Works with an account token or that site's own token. On the hosted endpoint now; in the npm package from its next release. |
+| `list_site_files` | Lists the file paths of a live site. Read-only. Works with an account token or that site's own token. |
 | `get_site_file` | Returns one file of a live site (for example `index.html` or `css/site.css`). Read-only. Same tokens as `list_site_files`. |
 | `edit_site_file` | Changes or adds one text file on a live site without a full folder Update; other files stay as they are. Restore undoes the last Update or Edit files save. Same tokens as `list_site_files`. |
-| `enable_form` | Collect leads on a claimed site: turns the contact form on or off. Visitors send a name, email and message; each message goes to the owner's mailbox and is kept for the dashboard (See messages). Claim the site first. Does not charge. On the hosted endpoint now; in the npm package from its next release. |
+| `enable_form` | Collect leads on a claimed site: turns the contact form on or off. Visitors send a name, email and message; each message goes to the owner's mailbox and is kept for the dashboard (See messages). Claim the site first. Does not charge. |
 | `list_form_submissions` | Lists recent messages from a claimed site's contact form. Read-only. |
-| `set_site_password` | Locks a claimed site with a password visitors type before it opens. An empty password makes it public. Works on the free link and on a custom domain. Does not charge. On the hosted endpoint now; in the npm package from its next release. |
+| `set_site_password` | Locks a claimed site with a password visitors type before it opens. An empty password makes it public. Works on the free link and on a custom domain. Does not charge. |
 | `clear_site_password` | Removes the password from a claimed site so anyone can open it. Does not charge. |
-| `set_site_indexing` | Hide from Google: on a claimed site, `noindex` asks search engines to skip it and `allow` lists it again (the default after claim). Visitors can still open the site. Claim the site first. Does not charge. On the hosted endpoint now; in the npm package from its next release. |
+| `set_site_indexing` | Hide from Google: on a claimed site, `noindex` asks search engines to skip it and `allow` lists it again (the default after claim). Visitors can still open the site. Claim the site first. Does not charge. |
 | `set_backend` | Routes API paths, or the whole site, to an HTTPS backend hosted elsewhere (for example Railway or Render). An empty `url` unlinks it. |
 | `get_checkout_link` | Returns a payment link the human opens and pays. The agent must not open, fill in, or pay it. After payment the domain goes live on that site. Only for sites on the account. For an anonymous site, give the human the claim link first. |
 | `site_of_the_day_badge` | Returns the one line to paste before `</body>` for a Site of the day, week, month or year award, plus instructions. Read-only. The ribbon shows only during the winning period. |
