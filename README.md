@@ -6,6 +6,9 @@ How do I get my site live with my AI? Add this server and say "publish this site
 # Claude Code
 claude mcp add dropthehassle -- npx -y dropthehassle-mcp@latest
 
+# Grok Build (Grok CLI)
+grok mcp add dropthehassle -- npx -y dropthehassle-mcp@latest
+
 # Cursor: add to .cursor/mcp.json
 {
   "mcpServers": {
@@ -115,6 +118,28 @@ To add it by hand, put this in `~/.cursor/mcp.json` (all projects) or `.cursor/m
 ```
 
 The repo root [`.mcp.json`](./.mcp.json) is the same block, for clients that detect an MCP server from the repository.
+
+### Grok Build (Grok CLI)
+
+Grok Build (the `grok` command) adds MCP servers with `grok mcp add`. Hosted connector, no token for a first publish:
+
+```bash
+grok mcp add --transport http dropthehassle https://dropthehassle.com/mcp
+```
+
+Or run the npm package locally (stdio):
+
+```bash
+grok mcp add dropthehassle -- npx -y dropthehassle-mcp@latest
+```
+
+For account tools, pass your token. Keep it in your environment; Grok expands `${DTH_TOKEN}`:
+
+```bash
+grok mcp add --transport http dropthehassle https://dropthehassle.com/mcp --header 'Authorization: Bearer ${DTH_TOKEN}'
+```
+
+Check it with `grok mcp list` and `grok mcp doctor dropthehassle`. Add `--scope project` to write `.grok/config.toml` in the current project instead of your user config. Grok also reads a server you already added for Claude Code (`~/.claude.json`) or Cursor (`.cursor/mcp.json`). See [xAI's MCP docs](https://docs.x.ai/build/features/mcp-servers).
 
 ### Zed
 
