@@ -20,6 +20,8 @@ grok mcp add dropthehassle -- npx -y dropthehassle-mcp@latest
 }
 ```
 
+Agent skills (publish, buy a domain, connect your own domain, domain email) for Claude Code, Cursor, Codex, Gemini CLI and more: `npx skills add bosmdavid-gif/dropthehassle-skill`.
+
 Or skip the install and use the hosted connector: `https://dropthehassle.com/mcp` (no token and no email for a first deploy). Your AI publishes the site first and gives you the live link and a claim link; after go-live, it asks once if you want a .com (payment link, no DNS) and an optional mailbox that sends and receives. From a terminal, the same thing is `npx -y dropthehassle@latest deploy .` (email optional; add `--email you@example.com` after go-live to get the claim link mailed).
 
 What your AI can do:
@@ -140,6 +142,43 @@ grok mcp add --transport http dropthehassle https://dropthehassle.com/mcp --head
 ```
 
 Check it with `grok mcp list` and `grok mcp doctor dropthehassle`. Add `--scope project` to write `.grok/config.toml` in the current project instead of your user config. Grok also reads a server you already added for Claude Code (`~/.claude.json`) or Cursor (`.cursor/mcp.json`). See [xAI's MCP docs](https://docs.x.ai/build/features/mcp-servers).
+
+### OpenCode
+
+Add to `opencode.json` (project) or `~/.config/opencode/opencode.json`. Hosted connector, no token for a first publish:
+
+```json
+{
+  "$schema": "https://opencode.ai/config.json",
+  "mcp": {
+    "dropthehassle": { "type": "remote", "url": "https://dropthehassle.com/mcp", "enabled": true }
+  }
+}
+```
+
+Or the local server: `"dropthehassle": { "type": "local", "command": ["npx", "-y", "dropthehassle-mcp@latest"], "enabled": true }`. Check it with `opencode mcp list`. See [OpenCode's MCP docs](https://opencode.ai/docs/mcp-servers/).
+
+### Cline
+
+Cline CLI:
+
+```bash
+cline mcp add dropthehassle https://dropthehassle.com/mcp --transport http --yes
+# or the local server
+cline mcp add dropthehassle --yes -- npx -y dropthehassle-mcp@latest
+```
+
+Check it with `cline config mcp`. In the Cline extension: **MCP Servers → Remote Servers**, URL `https://dropthehassle.com/mcp`, transport **Streamable HTTP**. Or in `cline_mcp_settings.json`: `"dropthehassle": { "type": "streamableHttp", "url": "https://dropthehassle.com/mcp" }` (without `type`, Cline uses legacy SSE). See [Cline's MCP docs](https://docs.cline.bot/mcp/adding-and-configuring-servers).
+
+### Devin CLI
+
+```bash
+devin mcp add dropthehassle https://dropthehassle.com/mcp
+# or the local server
+devin mcp add dropthehassle -- npx -y dropthehassle-mcp@latest
+```
+
+Adding the hosted URL opens an optional DropTheHassle sign-in; you can skip it, a first publish needs no account. Check it with `devin mcp list`. Add `-s project` to write `.devin/mcp_config.json`. See [Devin's MCP docs](https://docs.devin.ai/cli/extensibility/mcp/configuration).
 
 ### Zed
 
