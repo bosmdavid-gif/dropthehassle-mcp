@@ -182,9 +182,27 @@ Adding the hosted URL opens an optional DropTheHassle sign-in; you can skip it, 
 
 ### Zed
 
-Install the Zed extension `mcp-server-dropthehassle` once it is in the marketplace.
+Zed **Settings → AI → MCP Servers → Add Server → Add Remote Server** → `https://dropthehassle.com/mcp` (no token for a first publish). Or add it to your Zed settings file (`zed: open settings file`):
 
-Until then, add a remote MCP server: Zed **Settings → AI → MCP Servers → Add Remote Server** → `https://dropthehassle.com/mcp` (no token for a first publish).
+```json
+{
+  "context_servers": {
+    "dropthehassle": { "url": "https://dropthehassle.com/mcp" }
+  }
+}
+```
+
+Or the local server:
+
+```json
+{
+  "context_servers": {
+    "dropthehassle": { "command": "npx", "args": ["-y", "dropthehassle-mcp@latest"] }
+  }
+}
+```
+
+With no `Authorization` header Zed offers the standard MCP sign-in; you can skip it, a first publish needs no account. A green dot next to the server in Settings → AI → MCP Servers means it is active. See [Zed's MCP docs](https://zed.dev/docs/ai/mcp). A Zed extension, `mcp-server-dropthehassle`, will follow once it is in the marketplace.
 
 ### Windsurf
 
